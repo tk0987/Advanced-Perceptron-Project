@@ -235,12 +235,15 @@ Neuron parameter statistics
 ======================================================================
 
 neuron_layer_1
-  Q_in      : min=0.8378, mean=1.0050, max=1.2230, std=0.0622
-  Q_out     : min=0.8693, mean=1.0186, max=1.6545, std=0.0864
-  threshold : min=-0.5971, mean=-0.0179, max=0.1009, std=0.0651
+
+      Q_in      : min=0.8378, mean=1.0050, max=1.2230, std=0.0622
+      Q_out     : min=0.8693, mean=1.0186, max=1.6545, std=0.0864
+      threshold : min=-0.5971, mean=-0.0179, max=0.1009, std=0.0651
+  
 
   Per-receptor statistics:
-    AMPA            | Q_in=0.9968 | Q_out=1.1294 | threshold=-0.1242
+  
+    AMPA            | Q_in=0.9968 | Q_out=1.1294 | threshold=-0.1242    
     NMDA            | Q_in=0.9787 | Q_out=1.0519 | threshold=-0.0549
     Kainate         | Q_in=1.0090 | Q_out=1.0128 | threshold=0.0000
     mGluR1          | Q_in=0.9979 | Q_out=1.0136 | threshold=-0.0012
@@ -266,11 +269,13 @@ neuron_layer_1
     NK1             | Q_in=0.9986 | Q_out=1.0052 | threshold=-0.0149
 
 neuron_layer_2
-  Q_in      : min=0.8109, mean=1.0198, max=1.5863, std=0.0879
-  Q_out     : min=0.8476, mean=1.0397, max=1.8102, std=0.1033
-  threshold : min=-0.8577, mean=-0.0371, max=0.1283, std=0.0868
+
+      Q_in      : min=0.8109, mean=1.0198, max=1.5863, std=0.0879
+      Q_out     : min=0.8476, mean=1.0397, max=1.8102, std=0.1033
+      threshold : min=-0.8577, mean=-0.0371, max=0.1283, std=0.0868
 
   Per-receptor statistics:
+  
     AMPA            | Q_in=1.1271 | Q_out=1.0186 | threshold=0.0080
     NMDA            | Q_in=1.0616 | Q_out=1.0098 | threshold=0.0247
     Kainate         | Q_in=1.0065 | Q_out=0.9992 | threshold=0.0000
@@ -297,11 +302,13 @@ neuron_layer_2
     NK1             | Q_in=1.0154 | Q_out=1.0487 | threshold=-0.0462
 
 neuron_layer_3
-  Q_in      : min=0.8316, mean=1.0414, max=1.8011, std=0.1030
-  Q_out     : min=0.7570, mean=1.0176, max=1.9152, std=0.1095
-  threshold : min=-0.4645, mean=-0.0054, max=0.2369, std=0.0742
+    
+      Q_in      : min=0.8316, mean=1.0414, max=1.8011, std=0.1030
+      Q_out     : min=0.7570, mean=1.0176, max=1.9152, std=0.1095
+      threshold : min=-0.4645, mean=-0.0054, max=0.2369, std=0.0742
 
   Per-receptor statistics:
+  
     AMPA            | Q_in=1.0337 | Q_out=1.1011 | threshold=-0.0297
     NMDA            | Q_in=1.0024 | Q_out=1.1388 | threshold=-0.0817
     Kainate         | Q_in=1.0039 | Q_out=1.0015 | threshold=0.0000
@@ -328,11 +335,13 @@ neuron_layer_3
     NK1             | Q_in=1.0549 | Q_out=1.0639 | threshold=-0.0633
 
 neuron_layer_4
-  Q_in      : min=0.6659, mean=1.0185, max=1.7717, std=0.1057
-  Q_out     : min=0.8312, mean=1.0496, max=1.6678, std=0.1051
-  threshold : min=-0.4851, mean=-0.0131, max=0.4672, std=0.1015
+
+      Q_in      : min=0.6659, mean=1.0185, max=1.7717, std=0.1057
+      Q_out     : min=0.8312, mean=1.0496, max=1.6678, std=0.1051
+      threshold : min=-0.4851, mean=-0.0131, max=0.4672, std=0.1015
 
   Per-receptor statistics:
+  
     AMPA            | Q_in=1.1024 | Q_out=1.0157 | threshold=0.0592
     NMDA            | Q_in=1.1417 | Q_out=1.0142 | threshold=0.0651
     Kainate         | Q_in=1.0019 | Q_out=1.0056 | threshold=0.0537
