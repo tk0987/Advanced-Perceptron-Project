@@ -1,8 +1,183 @@
 # Advanced-Perceptron-Project
 tensorflow - keras layer, that add colors to the inputs and outputs
 
+# Neuron APP - Advanced Perceptron Project
+ML tool for various tasks - to be continued
 
-typical output after 20 epochs:
+1. PROJECT DESCRIPTION
+
+Perceptron much more biological neuron-like than perceptrons in current use. Within one graph node several networks are connected interacting with each other - within built-in strict rules. And yes...
+
+One neuron from this project CAN be XOR gate.
+
+2. WHAT IS INSIDE
+
+Well. Each neuron is just like perceptrons - multiple just in one node. Those perceptrons inside one neuron can interact with each other, influencing/altering their action. Look:
+    
+    RECEPTOR_RULES: dict[str, dict[str, list[str]]] = {
+        # --- Ionotropic glutamate receptors ---
+        "AMPA": {
+            "stimuli": ["NMDA", "D1", "5-HT2A", "alpha1A"],
+            "inhibitory": ["GABA_A", "GABA_B", "CB1", "D2"],
+        },
+        "NMDA": {
+            "stimuli": ["AMPA", "D1", "5-HT2A", "H2"],
+            "inhibitory": [
+                "GABA_A", "5-HT1A", "CB1", "sigma1", "GlyR alpha1"
+            ],
+        },
+        "Kainate": {
+            "stimuli": ["AMPA", "mGluR1"],
+            "inhibitory": ["GABA_A"],
+        },
+    
+        # --- Metabotropic glutamate receptors ---
+        "mGluR1": {
+            "stimuli": ["NMDA", "5-HT2A"],
+            "inhibitory": ["GABA_B"],
+        },
+        "mGluR2": {
+            # Glutamate activates mGluR2; AMPA/NMDA are not its ligands.
+            # External ligand drive is not represented in this receptor-only graph.
+            "stimuli": [],
+            # Approximation: presynaptic mGluR2 activation can reduce glutamate
+            # release and thereby reduce downstream AMPA/NMDA activity.
+            "inhibitory": ["AMPA", "NMDA"],
+        },
+    
+        # --- GABAergic receptors ---
+        "GABA_A": {
+            "stimuli": ["5-HT1A", "D2"],
+            "inhibitory": ["AMPA", "NMDA", "H1", "NK1", "Mu (mi)"],
+        },
+        "GABA_B": {
+            "stimuli": ["D2", "CB1"],
+            "inhibitory": ["AMPA", "mGluR1", "H2"],
+        },
+    
+        # --- Dopamine receptors ---
+        "D1": {
+            "stimuli": ["NMDA", "AMPA", "5-HT2A", "H1"],
+            "inhibitory": ["GABA_A", "D2"],
+        },
+        "D2": {
+            "stimuli": ["GABA_B", "5-HT1A", "H2"],
+            "inhibitory": ["D1", "AMPA"],
+        },
+    
+        # --- Serotonin receptors ---
+        "5-HT1A": {
+            "stimuli": ["GABA_A", "D2"],
+            "inhibitory": ["NMDA", "5-HT2A"],
+        },
+        "5-HT2A": {
+            "stimuli": ["D1", "NMDA", "mGluR1"],
+            "inhibitory": ["GABA_A", "5-HT1A"],
+        },
+        "5-HT3": {
+            # Circuit-level proxy: in some circuits, 5-HT3 activation excites
+            # GABAergic interneurons. This is not a direct receptor interaction.
+            "stimuli": ["GABA_A"],
+            "inhibitory": [],
+        },
+    
+        # --- Histamine receptors ---
+        "H1": {
+            "stimuli": ["D1", "5-HT2A"],
+            "inhibitory": ["GABA_A", "MT1"],
+        },
+        "H2": {
+            "stimuli": ["D2", "NMDA"],
+            "inhibitory": ["GABA_B"],
+        },
+        "H3": {
+            # H3 autoreceptor activation can suppress histamine release.
+            # These downstream effects are circuit-level approximations.
+            "stimuli": [],
+            "inhibitory": ["H1", "H2"],
+        },
+    
+        # --- Endocannabinoid receptors ---
+        "CB1": {
+            "stimuli": ["GABA_B"],
+            # Approximation for reduced glutamate release at selected synapses.
+            "inhibitory": ["NMDA", "AMPA"],
+        },
+    
+        # --- Opioid receptors ---
+        "Mu (mi)": {
+            # Driven by external endogenous/exogenous opioid ligand input.
+            "stimuli": [],
+            "inhibitory": ["NMDA", "5-HT2A"],
+        },
+    
+        # --- Other receptors ---
+        "GlyR alpha1": {
+            "stimuli": [],
+            "inhibitory": ["NMDA"],
+        },
+        "alpha1A": {
+            "stimuli": ["AMPA"],
+            "inhibitory": [],
+        },
+        "alpha2A": {
+            "stimuli": [],
+            "inhibitory": ["D1", "5-HT2A"],
+        },
+        "sigma1": {
+            "stimuli": [],
+            "inhibitory": ["NMDA"],
+        },
+        "MT1": {
+            "stimuli": [],
+            "inhibitory": ["H1"],
+        },
+        "OX1": {
+            # Circuit-level proxy for promoting histaminergic neuron activity.
+            "stimuli": ["H1", "H2"],
+            "inhibitory": [],
+        },
+        "NK1": {
+            "stimuli": [],
+            "inhibitory": ["GABA_A"],
+        },
+    }
+
+These above are just main transmitters and their receptors - the first part to be aware of. Some of the receptors are altering function of others - negatively and positively, depending whether they are stimuli/inhibitory. Now the more funny part - the way, how all of those nets are encoded to interact with each other inside single AP - advanced perceptron:
+
+So, we have several main networks just in one neuron, and available subnets are the receptor types. Those perceptrons are interconnected inside of neuron (node) WITH STRICT RULES. Example: noradrenaline (alpha receptors):
+
+        "alpha1A": {
+            "stimuli": ["AMPA"],
+            "inhibitory": [],
+        },
+        "alpha2A": {
+            "stimuli": [],
+            "inhibitory": ["D1", "5-HT2A"],
+        },
+            
+Stimuli and inhibitory means that the floating point numbers, inputs of noradrenaline network will be increased by ampa, and decreased by d1 and 5-ht2a - not only activation function is taken into account.
+
+So: assume, alpha1A has 2.0 on input. Theres also AMPA with value of 3, and D1 with value of 4. It means, that norepinephrine final output will be smaller (!) than after simple activation function - D1 (inhibitor) has bigger value than AMPA stimuli.
+
+Therefore - each single neuron can act as XOR gate (and even more).
+
+Whats important - the degree of influence by other networks adjusts during training.
+
+Each neuron has memory, denoted by 'history' variable. History is just a list of previous transmitter values, and it take part in learning process, introducing hysteresis.
+In real world cells, memory can be at DNA level - for example if g-protein activated certain genes, altering transmitter production at output. It can be also increase/decrease in receptor numbers at input, due to sensitization/tolerance developement. 
+
+Here number of receptors is stable, but their response differs. It would be nice to code net with floating internal structure over time - not predefined like here. I hope I ll do it some day.
+
+Loss is very important - it is the info about difference between desired state and the goal to achieve. Just like in robots - Loss can be just the difference between sensor reading (current) and the desired state. The net 'll learn to achieve that. To compensate non-desired state of the system.
+
+3. HOW TO USE THIS
+
+Make complex networks. Add different keras networks (dense, conv, etc) to different receptor types, or split output of one keras net feeding different receptor types. those receptors add colors to the grayscale of floats and ints. 
+
+typical output after 20 epochs (note higher val stats, dataset needs some tweaks):
+
+
  Total params: 630,718 (2.41 MB)
  Trainable params: 235,194 (918.73 KB)
  Non-trainable params: 395,524 (1.51 MB)
